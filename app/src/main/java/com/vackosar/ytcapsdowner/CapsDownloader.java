@@ -1,43 +1,36 @@
-package ytcapsdowner.vackosar.com.ytcapsdowner;
+package com.vackosar.ytcapsdowner;
 
-import android.text.Html;
+import android.os.AsyncTask;
+import android.widget.TextView;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.junit.Test;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
-import static org.junit.Assert.*;
+class CapsDownloader extends AsyncTask<String, Void, String> {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        String punctuated = downloadCaps();
-        System.out.println(punctuated);
+    private final TextView textView;
+
+    public CapsDownloader(TextView textView) {
+        this.textView = textView;
     }
 
-    private String downloadCaps() throws IOException {
-        String videoInfo = convertStreamToString(new URL("http://www.youtube.com/get_video_info?video_id=6Mfw_LUwo08").openConnection().getInputStream());
-        String captionTracks = extractTokenValue("caption_tracks", videoInfo);
-        String url = extractTokenValue("u", captionTracks);
-        String subs = convertStreamToString(new URL(url).openConnection().getInputStream());
-        String text = extractText(subs);
-        return punctuate(text);
+    public String downloadCaps() {
+        try {
+            String videoInfo = convertStreamToString(new URL("http://www.youtube.com/get_video_info?video_id=6Mfw_LUwo08").openConnection().getInputStream());
+            String captionTracks = extractTokenValue("caption_tracks", videoInfo);
+            String url = extractTokenValue("u", captionTracks);
+            String subs = convertStreamToString(new URL(url).openConnection().getInputStream());
+            String text = extractText(subs);
+            return punctuate(text);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String punctuate(String text) throws IOException {
@@ -68,10 +61,21 @@ public class ExampleUnitTest {
         }
         throw new RuntimeException("Token not found");
     }
-    static String convertStreamToString(java.io.InputStream is) throws IOException {
+
+    private static String convertStreamToString(java.io.InputStream is) throws IOException {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         String output = s.hasNext() ? s.next() : "";
         is.close();
         return output;
     }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        return downloadCaps();
+    }
+
+    protected void onPostExecute(String result) {
+        textView.setText(result);
+    }
+
 }
