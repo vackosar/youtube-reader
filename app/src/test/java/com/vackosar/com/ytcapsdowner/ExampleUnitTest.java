@@ -1,4 +1,4 @@
-package ytcapsdowner.vackosar.com.ytcapsdowner;
+package com.vackosar.com.ytcapsdowner;
 
 import org.junit.Test;
 
