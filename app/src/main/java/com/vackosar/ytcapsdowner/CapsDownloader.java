@@ -28,7 +28,8 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
             String url = extractTokenValue("u", captionTracks);
             String subs = convertStreamToString(new URL(url).openConnection().getInputStream());
             String text = extractText(subs);
-            return punctuate(text);
+            return text;
+//            return punctuate(text);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
