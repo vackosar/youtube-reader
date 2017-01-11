@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
         editText.setText("");
         final Button button = (Button) getWindow().findViewById(R.id.displayButton);

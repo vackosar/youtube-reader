@@ -21,12 +21,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Paste URL" />
+            android:text="Paste URL"
+            android:textSize="9dp" />
         <Button
             android:id="@+id/displayButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:text="Display"
+            android:textSize="9dp"
             />
     </LinearLayout>
 
@@ -43,7 +46,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars = "vertical"
-            android:maxLines = "999"
-            android:text="Loading..." />
+            android:text="Text"
+            android:textSize="20dp"
+            />
     </ScrollView>
 </LinearLayout>
