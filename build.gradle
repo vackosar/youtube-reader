@@ -63,26 +63,26 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
-        compile fileTree(dir: 'libs', include: ['*.jar'])
-        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        })
-        compile 'com.android.support:appcompat-v7:25.3.1'
-        compile group: 'commons-lang', name: 'commons-lang', version: '2.3'
-        testCompile 'junit:junit:4.12'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
     }
 }
 
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion "25.0.3"
 
     lintOptions {
         abortOnError false
     }
 
+    def mainDir = "src/main"
     sourceSets {
         main {
             // TensorFlow Java API sources.
@@ -96,16 +96,12 @@ android {
                 srcDir tensorflowRepo + 'tensorflow/contrib/android/java'
             }
 
-            // Android demo app sources.
-            java {
-                srcDir 'src'
-            }
-
+            java.srcDir 'src/main/java'
             manifest.srcFile 'AndroidManifest.xml'
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
+            resources.srcDirs = ['src/main/res']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
             assets.srcDirs = [project.ext.ASSET_DIR]
             jniLibs.srcDirs = ['libs']
         }
@@ -128,6 +124,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'commons-lang:commons-lang:2.3'
+    testCompile 'junit:junit:4.12'
 }
 
 task buildNativeBazel(type: Exec) {
