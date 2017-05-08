@@ -9,21 +9,20 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WordIndexLoader {
+public class WordIndex {
 
     private static final String WORD_INDEX_FILENAME = "punctuator_word_index.txt";
+    private final Map<String, Integer> index;
 
-    private final AssetManager assetManager;
-
-    public WordIndexLoader(AssetManager assetManager) {
-        this.assetManager = assetManager;
+    public WordIndex(AssetManager assetManager) {
+        index = load(assetManager);
     }
 
-    public Map<String, Integer> load() {
+    private Map<String, Integer> load(AssetManager assetManager) {
         HashMap<String, Integer> wordIndex = new HashMap<>();
         BufferedReader reader = null;
         try {
-            reader = createReader();
+            reader = createReader(assetManager);
             String line;
             while ((line = reader.readLine()) != null) {
                 parseLine(wordIndex, line);
@@ -41,13 +40,26 @@ public class WordIndexLoader {
     }
 
     @NonNull
-    private BufferedReader createReader() throws IOException {
+    private BufferedReader createReader(AssetManager assetManager) throws IOException {
         return new BufferedReader(new InputStreamReader(assetManager.open(WORD_INDEX_FILENAME), "UTF-8"));
     }
 
     private void parseLine(HashMap<String, Integer> wordIndex, String line) {
         String[] split = line.split(" ");
         wordIndex.put(split[0], Integer.valueOf(split[1]));
+    }
+
+    public Integer get(String word) {
+        Integer i = index.get(word);
+        if (i == null) {
+            return unknownWordIndex();
+        } else {
+            return i;
+        }
+    }
+
+    private Integer unknownWordIndex() {
+        return index.size();
     }
 
 }
