@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
     @Override
@@ -31,8 +33,10 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
                 new CapsDownloader(textView).execute(url);
             }
         }
-        Punctuator punctuator = new Punctuator(getAssets());
-        punctuator.close();
+        GraphExecutor graphExecutor = new GraphExecutor(getAssets());
+        WordIndexLoader wordIndexLoader = new WordIndexLoader(getAssets());
+        Map<String, Integer> wordIndex = wordIndexLoader.load();
+        graphExecutor.close();
     }
 
     @Override
