@@ -31,11 +31,9 @@ def tensorflowRepo = '/data/androidStudioProjects/tensorflow/'
 
 // Default to building with Bazel and override with make if requested.
 def nativeBuildRule = 'buildNativeBazel'
-def demoLibPath = tensorflowRepo + '/bazel-bin/tensorflow/examples/android/libtensorflow_demo.so'
 def inferenceLibPath = tensorflowRepo + '/bazel-bin/tensorflow/contrib/android/libtensorflow_inference.so'
 if (buildWithMake) {
     nativeBuildRule = 'buildNativeMake'
-    demoLibPath = tensorflowRepo + '/tensorflow/contrib/makefile/gen/lib/libtensorflow_demo.so'
     inferenceLibPath = tensorflowRepo + '/tensorflow/contrib/makefile/gen/lib/libtensorflow_inference.so'
 }
 
@@ -155,12 +153,11 @@ task buildNativeMake(type: Exec) {
          '-s',  \
          'tensorflow/contrib/makefile/sub_makefiles/android/Makefile.in',  \
          '-t',  \
-         'libtensorflow_inference.so libtensorflow_demo.so'  \
+         'libtensorflow_inference.so'  \
          //, '-T'  // Uncomment to skip protobuf and speed up subsequent builds.
 }
 
 task copyNativeLibs(type: Copy) {
-    from demoLibPath
     from inferenceLibPath
     into nativeOutDir
     duplicatesStrategy = 'include'

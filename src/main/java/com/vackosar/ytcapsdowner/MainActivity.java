@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
                 new CapsDownloader(textView).execute(url);
             }
         }
+
+        new Punctuator().punctuate(getAssets());
     }
 
     @Override
