@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
             }
         }
         Punctuator punctuator = new Punctuator(getAssets());
-        punctuator.punctuate(punctuator.SAMPLE);
         punctuator.close();
     }
 

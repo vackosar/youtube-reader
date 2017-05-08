@@ -5,12 +5,8 @@ import org.junit.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
+public class MainActivityTest {
+
     @Test
     public void addition_isCorrect() throws Exception {
         URL url = new URL("https://www.youtube.com/watch?v=6Mfw_LUwo08&t=444s");
