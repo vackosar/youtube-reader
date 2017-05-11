@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
+    private Punctuator punctuator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         GraphExecutor graphExecutor = new GraphExecutor(getAssets());
         WordIndex wordIndex = new WordIndex(getAssets());
         SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
+        Sampler sampler = new Sampler();
+        punctuator = new Punctuator(sampler, samplePunctuator);
         graphExecutor.close();
     }
 
