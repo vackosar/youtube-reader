@@ -10,7 +10,7 @@ import java.util.List;
 public class Sampler {
 
     private static final String DOT_LIKE = ",;.!?";
-    private static final String SPACE = " ";
+    public static final String SPACE = " ";
     public static final String FILLER = "however";
 
     public Sampler() {
@@ -30,7 +30,7 @@ public class Sampler {
         List<String[]> samples = new ArrayList<>();
         List<String> firstList = new ArrayList<>();
         for (int i = 0; i < GraphExecutor.DETECTECTION_INDEX + 1; i++) {
-            firstList.add("however");
+            firstList.add(FILLER);
         }
         Deque<String> deque = new ArrayDeque<>(firstList);
         for(String word: clean(text).split(SPACE)) {
