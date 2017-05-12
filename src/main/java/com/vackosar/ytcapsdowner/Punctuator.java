@@ -26,6 +26,7 @@ public class Punctuator {
             } else {
                 output = output + word;
             }
+            capitalize = punctuate;
             if (punctuate) {
                 output = output + PUNCTION;
             }
