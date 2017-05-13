@@ -2,8 +2,12 @@ package com.vackosar.ytcapsdowner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +24,9 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
+    private void init(ShareActionProvider shareActionProvider) {
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
         editText.setText("");
         final Button button = (Button) getWindow().findViewById(R.id.displayButton);
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
         Sampler sampler = new Sampler();
         Punctuator punctuator = new Punctuator(sampler, samplePunctuator);
-        capsPunctuator = new CapsPunctuator(getCaptionText(), punctuator);
+        capsPunctuator = new CapsPunctuator(getCaptionText(), punctuator, shareActionProvider);
 
         if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getData().toString();
@@ -73,7 +79,13 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         graphExecutor.close();
     }
 
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        init(shareActionProvider);
+        return true;
+    }
 
 }
