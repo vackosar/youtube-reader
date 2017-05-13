@@ -9,22 +9,8 @@ import java.util.List;
 
 public class Sampler {
 
-    private static final String DOT_LIKE = ",;.!?";
     public static final String SPACE = " ";
     public static final String FILLER = "however";
-
-    public Sampler() {
-
-    }
-
-    private String clean(String text) {
-        return text
-                .toLowerCase()
-                .replaceAll(" '([^" + DOT_LIKE + "']*)'", " $1")
-                .replaceAll("[^a-z0-9\\' ]", "")
-                .replaceAll("n't", " n't")
-                .replaceAll("'([^t])", " '$1");
-    }
 
     public List<String[]> sample(String text) {
         List<String[]> samples = new ArrayList<>();
@@ -33,7 +19,7 @@ public class Sampler {
             firstList.add(FILLER);
         }
         Deque<String> deque = new ArrayDeque<>(firstList);
-        for(String word: clean(text).split(SPACE)) {
+        for(String word: Cleaner.clean(text).split(SPACE)) {
             if (word.isEmpty()) {
                 continue;
             }

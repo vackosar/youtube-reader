@@ -34,8 +34,8 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
         }
     }
 
-    private String setTokenValue(String lang, String en, String url) {
-        return url.replaceFirst("([&?])lang=[^&]*", "$1lang=en");
+    private String setTokenValue(String key, String value, String url) {
+        return url.replaceFirst("([&?])" + key + "=[^&]*", "$1" + key + "=" + value);
     }
 
     private URL createVideoInfoUrl(String url) throws MalformedURLException {
@@ -49,7 +49,15 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
     }
 
     private String extractText(String subs) {
-        return StringEscapeUtils.unescapeHtml((subs.replaceAll("</text>", " ").replaceAll("<[^>]*>", ""))).replaceAll("<[^>]*>", "").replaceAll("&#39;", "'");
+        return StringEscapeUtils.unescapeHtml(
+                subs
+                        .replaceAll("</text>", " ")
+                        .replaceAll("<[^>]*>", "")
+        )
+                .replaceAll("<[^>]*>", "")
+                .replaceAll("‘", "'")
+                .replaceAll("&#39;", "'")
+                .replaceAll("\n", " ");
     }
 
     private String extractTokenValue(String name, String tokens) throws UnsupportedEncodingException {
