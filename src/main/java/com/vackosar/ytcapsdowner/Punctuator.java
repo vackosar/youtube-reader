@@ -25,7 +25,6 @@ public class Punctuator {
             appendSpace(builder, word);
             appendCapitalized(builder, capitalize, word);
             capitalize = appendPunctuated(builder, sample);
-
         }
         return builder.toString();
     }

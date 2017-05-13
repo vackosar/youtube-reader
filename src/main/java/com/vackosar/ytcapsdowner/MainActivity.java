@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         try {
             capsPunctuator.punctuate(url);
         } catch (Exception e) {
-            Toast.makeText(this, ExceptionUtils.getRootCauseMessage(e), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, ExceptionUtils.getRootCauseMessage(e).replaceAll("^.*?Exception: ", ""), Toast.LENGTH_LONG).show();
         }
     }
 

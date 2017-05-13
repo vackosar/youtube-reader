@@ -10,26 +10,30 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-public class CapsDownloader extends AsyncTask<String, Void, String> {
+public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Result> {
 
     private static final int MAX_RETRY = 3;
     private static final String VIDEO_INFO_PREFIX = "http://www.youtube.com/get_video_info?video_id=";
+    public static final String CAPTIONS_TOKEN = "caption_tracks";
+    public static final String URL_TOKEN = "u";
+    public static final String LANG_TOKEN = "lang";
+    public static final String EN_LANG_TOKEN_VALUE = "en";
 
     private String download(String uri) {
         Exception exception = null;
         for (int i = 0; i < MAX_RETRY; i++) {
             try {
                 String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
-                String captionTracks = extractTokenValue("caption_tracks", videoInfo);
-                String url = extractTokenValue("u", captionTracks);
-                String englishUrl = setTokenValue("lang", "en", url);
+                String captionTracks = extractTokenValue(CAPTIONS_TOKEN, videoInfo);
+                String url = extractTokenValue(URL_TOKEN, captionTracks);
+                String englishUrl = setTokenValue(LANG_TOKEN, EN_LANG_TOKEN_VALUE, url);
                 String subs = convertStreamToString(new URL(englishUrl).openConnection().getInputStream());
                 return extractText(subs);
             } catch (TokenNotFound | IOException ignored) {
                 exception = ignored;
             }
         }
-        throw new RuntimeException("Failed after " + MAX_RETRY + " retries. ", exception);
+        throw new IllegalArgumentException("English captions couldn't be downloaded for URL:" + uri + ". Error message: " + exception.getMessage());
     }
 
     private String setTokenValue(String key, String value, String url) {
@@ -82,12 +86,32 @@ public class CapsDownloader extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... uris) {
-        return download(uris[0]);
+    protected Result doInBackground(String... uris) {
+        try {
+            return new Result(download(uris[0]));
+        } catch (Exception e) {
+            return new Result(e);
+        }
     }
 
     private static class TokenNotFound extends IllegalArgumentException {
-        public TokenNotFound(String msg) { super(msg); }
+        TokenNotFound(String msg) { super(msg); }
+    }
+
+
+    public static class Result {
+
+        public Result(String result) {
+            this.result = result;
+        }
+
+        public Result(Exception exception) {
+            this.exception = exception;
+        }
+
+        String result;
+        Exception exception;
+
     }
 
 }

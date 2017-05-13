@@ -15,11 +15,16 @@ public class CapsPunctuator {
 
     public void punctuate(String url) {
         try {
-            String text = new CapsDownloader().execute(url).get();
-            if (text.matches(PUNCTUATED)) {
-                textView.setText(text);
+            CapsDownloader.Result result = new CapsDownloader().execute(url).get();
+            if (result.result != null) {
+                String text = result.result;
+                if (text.matches(PUNCTUATED)) {
+                    textView.setText(text);
+                } else {
+                    textView.setText(punctuator.punctuate(text));
+                }
             } else {
-                textView.setText(punctuator.punctuate(text));
+                throw new RuntimeException(result.exception);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
