@@ -27,13 +27,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     }
 
     private void init(ShareActionProvider shareActionProvider) {
-        final EditText editText = (EditText) getWindow().findViewById(R.id.url);
-        editText.setText("");
         final Button button = (Button) getWindow().findViewById(R.id.displayButton);
         button.setOnClickListener(this);
-
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
 
         graphExecutor = new GraphExecutor(getAssets());
         WordIndex wordIndex = new WordIndex(getAssets());
@@ -42,12 +37,18 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         Punctuator punctuator = new Punctuator(sampler, samplePunctuator);
         capsPunctuator = new CapsPunctuator(getCaptionText(), punctuator, shareActionProvider);
 
+        punctuate(loadUrl());
+    }
+
+    private String loadUrl() {
+        final Intent intent = getIntent();
+        final String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
-            String url = intent.getData().toString();
-            if (url != null) {
-                editText.setText(url);
-                punctuate(url);
-            }
+            return intent.getData().toString();
+        } else if (Intent.ACTION_SEND.equals(action)) {
+            return intent.getStringExtra(Intent.EXTRA_TEXT);
+        } else {
+            return null;
         }
     }
 
@@ -59,13 +60,19 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     }
 
     private void punctuate(String url) {
-        try {
-            capsPunctuator.punctuate(url);
-        } catch (Exception e) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Delete entry")
-                    .setMessage(ExceptionUtils.getRootCauseMessage(e).replaceAll("^.*?Exception: ", ""))
-                    .show();
+        final EditText editText = (EditText) getWindow().findViewById(R.id.url);
+        if (url == null) {
+            editText.setText("");
+        } else {
+            editText.setText(url);
+            try {
+                capsPunctuator.punctuate(url);
+            } catch (Exception e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete entry")
+                        .setMessage(ExceptionUtils.getRootCauseMessage(e).replaceAll("^.*?Exception: ", ""))
+                        .show();
+            }
         }
     }
 
