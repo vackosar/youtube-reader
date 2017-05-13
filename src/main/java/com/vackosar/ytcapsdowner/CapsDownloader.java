@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-class CapsDownloader extends AsyncTask<String, Void, String> {
+public class CapsDownloader extends AsyncTask<String, Void, String> {
 
     private String download(String uri) {
         try {
