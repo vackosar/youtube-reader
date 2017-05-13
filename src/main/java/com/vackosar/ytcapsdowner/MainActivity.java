@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
                 capsPunctuator.punctuate(url);
             } catch (Exception e) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Delete entry")
+                        .setTitle("Error")
                         .setMessage(ExceptionUtils.getRootCauseMessage(e).replaceAll("^.*?Exception: ", ""))
                         .show();
             }
