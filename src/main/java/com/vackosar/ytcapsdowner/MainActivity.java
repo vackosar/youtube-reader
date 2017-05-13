@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
-    private Punctuator punctuator;
     private GraphExecutor graphExecutor;
+    private CapsPunctuator capsPunctuator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +30,28 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         WordIndex wordIndex = new WordIndex(getAssets());
         SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
         Sampler sampler = new Sampler();
-        punctuator = new Punctuator(sampler, samplePunctuator);
+        Punctuator punctuator = new Punctuator(sampler, samplePunctuator);
+        CapsDownloader capsDownloader = new CapsDownloader();
+        capsPunctuator = new CapsPunctuator(getCaptionText(), capsDownloader, punctuator);
 
         if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getData().toString();
             if (url != null) {
-                final TextView textView = (TextView) getWindow().findViewById(R.id.captionText);
                 editText.setText(url);
-                new CapsDownloader(textView, punctuator).execute(url);
+                capsPunctuator.punctuate(url);
             }
         }
     }
 
     @Override
     public void onClick(View view) {
-        final TextView textView = (TextView) getWindow().findViewById(R.id.captionText);
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
         String url = editText.getText().toString();
-        new CapsDownloader(textView, punctuator).execute(url);
+        capsPunctuator.punctuate(url);
+    }
+
+    private TextView getCaptionText() {
+        return (TextView) getWindow().findViewById(R.id.captionText);
     }
 
     @Override
@@ -55,4 +59,6 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         super.onDestroy();
         graphExecutor.close();
     }
+
+
 }

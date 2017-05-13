@@ -1,7 +1,6 @@
 package com.vackosar.ytcapsdowner;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -13,22 +12,14 @@ import java.net.URLDecoder;
 
 class CapsDownloader extends AsyncTask<String, Void, String> {
 
-    private final TextView textView;
-    private final Punctuator punctuator;
-
-    CapsDownloader(TextView textView, Punctuator punctuator) {
-        this.textView = textView;
-        this.punctuator = punctuator;
-    }
-
-    private String downloadCaps(String uri) {
+    private String download(String uri) {
         try {
             String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
             String captionTracks = extractTokenValue("caption_tracks", videoInfo);
             String url = extractTokenValue("u", captionTracks);
             String englishUrl = setTokenValue("lang", "en", url);
             String subs = convertStreamToString(new URL(englishUrl).openConnection().getInputStream());
-            return punctuator.punctuate(extractText(subs));
+            return extractText(subs);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -78,11 +69,7 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... uris) {
-        return downloadCaps(uris[0]);
-    }
-
-    protected void onPostExecute(String result) {
-        textView.setText(result);
+        return download(uris[0]);
     }
 
 }
