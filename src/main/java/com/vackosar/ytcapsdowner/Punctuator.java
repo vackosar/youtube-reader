@@ -5,7 +5,9 @@ import java.util.List;
 public class Punctuator {
 
     private static final String PUNCTION = ".";
-    public static final String DOT_LIKE = "[.!?,]";
+    public static final String EMPTY = "";
+    public static final String APOSTROPHE = "'";
+    public static final String N_T = "n't";
     private final Sampler sampler;
     private final SamplePunctuator samplePunctuator;
 
@@ -16,26 +18,53 @@ public class Punctuator {
 
     public String punctuate(String text) {
         List<String[]> samples = sampler.sample(text);
-        String output = "";
+        StringBuilder builder = new StringBuilder();
         boolean capitalize = true;
         for (String[] sample: samples) {
-            boolean punctuate = samplePunctuator.punctuate(sample);
-            String word = sample[GraphExecutor.DETECTECTION_INDEX];
-            if (capitalize) {
-                output = output + capitalize(word);
-            } else {
-                output = output + word;
-            }
-            capitalize = punctuate;
-            if (punctuate) {
-                output = output + PUNCTION;
-            }
-            output = output + Sampler.SPACE;
+            String word = readCurrentWord(sample);
+            appendSpace(builder, word);
+            appendCapitalized(builder, capitalize, word);
+            capitalize = appendPunctuated(builder, sample);
+
         }
-        return output;
+        return builder.toString();
+    }
+
+    private String readCurrentWord(String[] sample) {
+        return sample[GraphExecutor.DETECTECTION_INDEX];
+    }
+
+    private void appendSpace(StringBuilder output, String word) {
+        if (output.length() > 0) {
+            output.append(space(word));
+        }
+    }
+
+    private boolean appendPunctuated(StringBuilder output, String[] sample) {
+        boolean punctuate = samplePunctuator.punctuate(sample);
+        if (punctuate) {
+            output.append(PUNCTION);
+        }
+        return punctuate;
+    }
+
+    private void appendCapitalized(StringBuilder output, boolean capitalize, String word) {
+        if (capitalize) {
+            output.append(capitalize(word));
+        } else {
+            output.append(word);
+        }
     }
 
     private String capitalize(String word) {
         return word.substring(0,1).toUpperCase() + word.substring(1);
+    }
+
+    private String space(String word) {
+        if (word.startsWith(APOSTROPHE) || N_T.equals(word)) {
+            return EMPTY;
+        } else {
+            return Sampler.SPACE;
+        }
     }
 }
