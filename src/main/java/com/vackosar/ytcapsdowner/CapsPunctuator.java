@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 public class CapsPunctuator {
 
+    private static final String PUNCTUATED = ".*[.!?,].*";
     private final CapsDownloader capsDownloader;
     private final Punctuator punctuator;
     private final TextView textView;
@@ -20,7 +21,7 @@ public class CapsPunctuator {
     public void punctuate(String url) {
         try {
             String text = capsDownloader.execute(url).get();
-            if (text.matches(".*[.!?,].*")) {
+            if (text.matches(PUNCTUATED)) {
                 textView.setText(text);
             } else {
                 textView.setText(punctuator.punctuate(text));
