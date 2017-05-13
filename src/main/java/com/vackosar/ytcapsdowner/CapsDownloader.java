@@ -51,7 +51,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
             urlString = "https://" + urlString;
         }
         URL url = new URL(urlString);
-        if ("www.youtube.com".equals(url.getHost())) {
+        if ("www.youtube.com".equals(url.getHost()) || "m.youtube.com".equals(url.getHost())) {
             for (String tuple: url.getQuery().split("&")) {
                 if (tuple.startsWith("v=")) {
                     String value = tuple.replaceAll("v=", "");
