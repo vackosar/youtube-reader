@@ -21,8 +21,8 @@ def buildWithMake = false
 // NOTE: Does not affect the Makefile build target API (yet), which currently
 // assumes armeabi-v7a. If building with make, changing this will require
 // editing the Makefile as well.
-//def cpuType = 'armeabi-v7a'
-def cpuType = 'x86'
+def cpuType = 'armeabi-v7a'
+//def cpuType = 'x86'
 
 // Output directory in the local directory for packaging into the APK.
 def nativeOutDir = 'libs/' + cpuType

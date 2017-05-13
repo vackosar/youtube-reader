@@ -16,23 +16,28 @@ import java.net.URLDecoder;
 class CapsDownloader extends AsyncTask<String, Void, String> {
 
     private final TextView textView;
+    private final Punctuator punctuator;
 
-    public CapsDownloader(TextView textView) {
+    CapsDownloader(TextView textView, Punctuator punctuator) {
         this.textView = textView;
+        this.punctuator = punctuator;
     }
 
-    public String downloadCaps(String uri) {
+    private String downloadCaps(String uri) {
         try {
             String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
             String captionTracks = extractTokenValue("caption_tracks", videoInfo);
             String url = extractTokenValue("u", captionTracks);
-            String subs = convertStreamToString(new URL(url).openConnection().getInputStream());
-            String text = extractText(subs);
-            return text;
-//            return punctuate(text);
+            String englishUrl = setTokenValue("lang", "en", url);
+            String subs = convertStreamToString(new URL(englishUrl).openConnection().getInputStream());
+            return punctuator.punctuate(extractText(subs));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String setTokenValue(String lang, String en, String url) {
+        return url.replaceFirst("([&?])lang=[^&]*", "$1lang=en");
     }
 
     private URL createVideoInfoUrl(String url) throws MalformedURLException {

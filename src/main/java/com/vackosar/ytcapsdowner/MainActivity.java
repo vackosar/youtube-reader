@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
     private Punctuator punctuator;
+    private GraphExecutor graphExecutor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +26,20 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         final Intent intent = getIntent();
         final String action = intent.getAction();
 
+        graphExecutor = new GraphExecutor(getAssets());
+        WordIndex wordIndex = new WordIndex(getAssets());
+        SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
+        Sampler sampler = new Sampler();
+        punctuator = new Punctuator(sampler, samplePunctuator);
+
         if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getData().toString();
             if (url != null) {
                 final TextView textView = (TextView) getWindow().findViewById(R.id.captionText);
                 editText.setText(url);
-                new CapsDownloader(textView).execute(url);
+                new CapsDownloader(textView, punctuator).execute(url);
             }
         }
-        GraphExecutor graphExecutor = new GraphExecutor(getAssets());
-        WordIndex wordIndex = new WordIndex(getAssets());
-        SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
-        Sampler sampler = new Sampler();
-        punctuator = new Punctuator(sampler, samplePunctuator);
-        graphExecutor.close();
     }
 
     @Override
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         final TextView textView = (TextView) getWindow().findViewById(R.id.captionText);
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
         String url = editText.getText().toString();
-        new CapsDownloader(textView).execute(url);
+        new CapsDownloader(textView, punctuator).execute(url);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        graphExecutor.close();
     }
 }

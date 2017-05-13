@@ -34,6 +34,9 @@ public class Sampler {
         }
         Deque<String> deque = new ArrayDeque<>(firstList);
         for(String word: clean(text).split(SPACE)) {
+            if (word.isEmpty()) {
+                continue;
+            }
             deque.add(word);
             if (deque.size() == GraphExecutor.INPUT_SIZE + 1) {
                 deque.pollFirst();
