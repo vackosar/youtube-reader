@@ -12,7 +12,7 @@ import java.net.URLDecoder;
 
 public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Result> {
 
-    private static final int MAX_RETRY = 3;
+    private static final int MAX_RETRY = 2;
     private static final String VIDEO_INFO_PREFIX = "http://www.youtube.com/get_video_info?video_id=";
     public static final String CAPTIONS_TOKEN = "caption_tracks";
     public static final String URL_TOKEN = "u";
@@ -33,7 +33,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
                 exception = ignored;
             }
         }
-        throw new IllegalArgumentException("English captions couldn't be downloaded for URL:" + uri + ". Error message: " + exception.getMessage());
+        throw new IllegalArgumentException("English captions couldn't be downloaded for URL: '" + uri + "'.\nError message: " + exception.getMessage());
     }
 
     private String setTokenValue(String key, String value, String url) {
@@ -41,6 +41,9 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
     }
 
     private URL createVideoInfoUrl(String urlString) throws MalformedURLException {
+        if (!urlString.startsWith("http://") && !urlString.startsWith("https://")) {
+            urlString = "https://" + urlString;
+        }
         URL url = new URL(urlString);
         if ("www.youtube.com".equals(url.getHost())) {
             for (String tuple: url.getQuery().split("&")) {
