@@ -5,10 +5,8 @@ import android.widget.TextView;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -48,22 +46,6 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
             }
         }
         throw new RuntimeException("Could not parse exception.");
-    }
-
-    private String punctuate(String text) throws IOException {
-        byte[] data = ("text=" + text).getBytes();
-        HttpURLConnection conn= (HttpURLConnection) new URL("http://bark.phon.ioc.ee/punctuator").openConnection();
-        conn.setDoOutput(true);
-        conn.setInstanceFollowRedirects(false);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("charset", "utf-8");
-        conn.setRequestProperty("Content-Length", Integer.toString(data.length));
-        conn.setUseCaches(false);
-        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        wr.write(data);
-        wr.close();
-        return convertStreamToString(conn.getInputStream());
     }
 
     private String extractText(String subs) {
