@@ -14,10 +14,16 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
 
     private static final int MAX_RETRY = 2;
     private static final String VIDEO_INFO_PREFIX = "http://www.youtube.com/get_video_info?video_id=";
-    public static final String CAPTIONS_TOKEN = "caption_tracks";
-    public static final String URL_TOKEN = "u";
-    public static final String LANG_TOKEN = "lang";
-    public static final String EN_LANG_TOKEN_VALUE = "en";
+    private static final String CAPTIONS_TOKEN = "caption_tracks";
+    private static final String URL_TOKEN = "u";
+    private static final String LANG_TOKEN = "lang";
+    private static final String EN_LANG_TOKEN_VALUE = "en";
+    public static final String QUERY_SEPARATOR = "([&?])";
+    public static final String QUERY_VALUE_SEPARATOR = "=[^&]*";
+    public static final String FIRST_MATCH = "$1";
+    private static final String EQUALS = "=";
+    private static final String SLASH_PREFIX = "^/";
+    private static final String EMPTY = "";
 
     private String download(String uri) {
         Exception exception = null;
@@ -37,7 +43,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
     }
 
     private String setTokenValue(String key, String value, String url) {
-        return url.replaceFirst("([&?])" + key + "=[^&]*", "$1" + key + "=" + value);
+        return url.replaceFirst(QUERY_SEPARATOR + key + QUERY_VALUE_SEPARATOR, FIRST_MATCH + key + EQUALS + value);
     }
 
     private URL createVideoInfoUrl(String urlString) throws MalformedURLException {
@@ -53,7 +59,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
                 }
             }
         } else if ("youtu.be".equals(url.getHost())) {
-            return new URL(VIDEO_INFO_PREFIX + url.getPath().replaceFirst("^/", ""));
+            return new URL(VIDEO_INFO_PREFIX + url.getPath().replaceFirst(SLASH_PREFIX, EMPTY));
         } else {
             throw new IllegalArgumentException("Invalid Youtube address.");
         }
@@ -64,8 +70,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
         return StringEscapeUtils.unescapeHtml(
                 subs
                         .replaceAll("</text>", " ")
-                        .replaceAll("<[^>]*>", "")
-        )
+                        .replaceAll("<[^>]*>", ""))
                 .replaceAll("<[^>]*>", "")
                 .replaceAll("[‘’]", "'")
                 .replaceAll("&#39;", "'")
@@ -74,8 +79,8 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
 
     private String extractTokenValue(String name, String tokens) throws UnsupportedEncodingException {
         for (String token: tokens.split("&")) {
-            if (token.startsWith(name + "=")) {
-                return URLDecoder.decode(token.split("=")[1], "UTF-8");
+            if (token.startsWith(name + EQUALS)) {
+                return URLDecoder.decode(token.split(EQUALS)[1], "UTF-8");
             }
         }
         throw new TokenNotFound("Token " + name + " not found in " + tokens);
@@ -102,13 +107,13 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
     }
 
 
-    public static class Result {
+    static class Result {
 
-        public Result(String result) {
+        Result(String result) {
             this.result = result;
         }
 
-        public Result(Exception exception) {
+        Result(Exception exception) {
             this.exception = exception;
         }
 
