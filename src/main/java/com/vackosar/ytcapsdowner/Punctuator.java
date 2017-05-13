@@ -5,18 +5,18 @@ import java.util.List;
 public class Punctuator {
 
     private static final String PUNCTION = ".";
-    public static final String EMPTY = "";
-    public static final String APOSTROPHE = "'";
-    public static final String N_T = "n't";
+    private static final String EMPTY = "";
+    private static final String APOSTROPHE = "'";
+    private static final String N_T = "n't";
     private final Sampler sampler;
     private final SamplePunctuator samplePunctuator;
 
-    public Punctuator(Sampler sampler, SamplePunctuator samplePunctuator) {
+    Punctuator(Sampler sampler, SamplePunctuator samplePunctuator) {
         this.sampler = sampler;
         this.samplePunctuator = samplePunctuator;
     }
 
-    public String punctuate(String text) {
+    String punctuate(String text) {
         List<String[]> samples = sampler.sample(text);
         StringBuilder builder = new StringBuilder();
         boolean capitalize = true;
