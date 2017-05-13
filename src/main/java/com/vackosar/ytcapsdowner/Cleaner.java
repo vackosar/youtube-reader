@@ -5,6 +5,7 @@ public class Cleaner {
     public static String clean(String text) {
         return text
                 .toLowerCase()
+                .replaceAll("-", " ")
                 .replaceAll("[^a-z0-9\\' ]", "")
                 .replaceAll("n't", " n`t")
                 .replaceAll("([a-z])'s", "$1 `s")

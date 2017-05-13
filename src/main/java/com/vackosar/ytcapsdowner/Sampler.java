@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Sampler {
 
-    public static final String SPACE = " ";
+    static final String SPACE = " ";
     public static final String FILLER = "however";
 
     public List<String[]> sample(String text) {

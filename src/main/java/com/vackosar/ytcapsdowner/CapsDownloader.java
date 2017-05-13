@@ -55,7 +55,7 @@ class CapsDownloader extends AsyncTask<String, Void, String> {
                         .replaceAll("<[^>]*>", "")
         )
                 .replaceAll("<[^>]*>", "")
-                .replaceAll("‘", "'")
+                .replaceAll("[‘’]", "'")
                 .replaceAll("&#39;", "'")
                 .replaceAll("\n", " ");
     }
