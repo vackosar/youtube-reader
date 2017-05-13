@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
@@ -31,14 +34,13 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         SamplePunctuator samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
         Sampler sampler = new Sampler();
         Punctuator punctuator = new Punctuator(sampler, samplePunctuator);
-        CapsDownloader capsDownloader = new CapsDownloader();
-        capsPunctuator = new CapsPunctuator(getCaptionText(), capsDownloader, punctuator);
+        capsPunctuator = new CapsPunctuator(getCaptionText(), punctuator);
 
         if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getData().toString();
             if (url != null) {
                 editText.setText(url);
-                capsPunctuator.punctuate(url);
+                punctuate(url);
             }
         }
     }
@@ -47,7 +49,15 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     public void onClick(View view) {
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
         String url = editText.getText().toString();
-        capsPunctuator.punctuate(url);
+        punctuate(url);
+    }
+
+    private void punctuate(String url) {
+        try {
+            capsPunctuator.punctuate(url);
+        } catch (Exception e) {
+            Toast.makeText(this, ExceptionUtils.getRootCauseMessage(e), Toast.LENGTH_LONG).show();
+        }
     }
 
     private TextView getCaptionText() {
@@ -59,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         super.onDestroy();
         graphExecutor.close();
     }
+
+
 
 
 }
