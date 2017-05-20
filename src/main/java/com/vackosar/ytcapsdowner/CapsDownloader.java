@@ -18,20 +18,16 @@ public class CapsDownloader {
     private static final String TITLE_TOKEN = "title";
 
     public Result download(String uri) {
-        Exception exception = null;
-        for (int i = 0; i < MAX_RETRY; i++) {
-            try {
-                String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
-                String title = VideoInfoParser.extractTokenValue(TITLE_TOKEN, videoInfo);
-                String captionsUrl = VideoInfoParser.getCaptionsUrl(videoInfo);
-                String subtitles = convertStreamToString(new URL(captionsUrl).openConnection().getInputStream());
-                String text = extractText(subtitles);
-                return new Result(title, text);
-            } catch (VideoInfoParser.TokenNotFound | IOException ignored) {
-                exception = ignored;
-            }
+        try {
+            String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
+            String title = VideoInfoParser.extractTokenValue(TITLE_TOKEN, videoInfo);
+            String captionsUrl = VideoInfoParser.getCaptionsUrl(videoInfo);
+            String subtitles = convertStreamToString(new URL(captionsUrl).openConnection().getInputStream());
+            String text = extractText(subtitles);
+            return new Result(title, text);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("English captions couldn't be downloaded for URL: '" + uri + "'", e);
         }
-        throw new IllegalArgumentException("English captions couldn't be downloaded for URL: '" + uri + "'.\nError message: " + exception.getMessage());
     }
 
     private URL createVideoInfoUrl(String urlString) throws MalformedURLException {
