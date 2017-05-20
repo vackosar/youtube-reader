@@ -26,7 +26,6 @@ def buildWithMake = false
 //def cpuType = 'x86'
 
 // Output directory in the local directory for packaging into the APK.
-def nativeOutDir = 'libs/' + cpuType
 
 def tensorflowRepo = '/data/androidStudioProjects/tensorflow/'
 
