@@ -17,7 +17,6 @@ public class GraphExecutor {
     private static final int OUTPUT_SIZE = 2;
     private static final float[] OUTPUTS = new float[OUTPUT_SIZE];
 
-    private final AssetManager assetManager;
     private final TensorFlowInferenceInterface inferenceInterface;
 
     static {
@@ -25,7 +24,6 @@ public class GraphExecutor {
     }
 
     public GraphExecutor(AssetManager assetManager) {
-        this.assetManager = assetManager;
         this.inferenceInterface = new TensorFlowInferenceInterface(assetManager, MODEL_FILENAME);
     }
 
