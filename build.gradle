@@ -12,30 +12,15 @@
 // build is not yet guaranteed. See comments below for caveats and tips
 // for speeding up the build, such as as enabling ccache.
 
-// Set to true to build with make.
-// NOTE: Running a make build will cause subsequent Bazel builds to *fail*
-// unless the contrib/makefile/downloads/ and gen/ dirs are deleted afterwards.
-def buildWithMake = false
-
-// Controls output directory in APK and CPU type for Bazel builds.
-// NOTE: Does not affect the Makefile build target API (yet), which currently
-// assumes armeabi-v7a. If building with make, changing this will require
-// editing the Makefile as well.
-//def cpuType = 'armeabi-v7a'
-//def cpuType = 'armeabi'
-//def cpuType = 'x86'
 
 // Output directory in the local directory for packaging into the APK.
 
+def buildLibs = false
 def tensorflowRepo = '/data/androidStudioProjects/tensorflow/'
 
 // Default to building with Bazel and override with make if requested.
 def nativeBuildRule = 'buildNativeBazel'
 def inferenceLibPath = tensorflowRepo + '/bazel-bin/tensorflow/contrib/android/libtensorflow_inference.so'
-if (buildWithMake) {
-    nativeBuildRule = 'buildNativeMake'
-    inferenceLibPath = tensorflowRepo + '/tensorflow/contrib/makefile/gen/lib/libtensorflow_inference.so'
-}
 
 // Defines the NDK location for Makefile builds. Does *not* affect Bazel builds.
 // Override with your absolute NDK location if this fails to get the location
@@ -145,17 +130,19 @@ task buildNativeBazel() {
 
 def buildNativeBazelForCpu(String cpu, tensorflowRepo, bazelLocation, inferenceLibPath) {
     def libDir = System.getProperty("user.dir") + "/libs"
-    exec {
-        workingDir tensorflowRepo
-        commandLine bazelLocation, 'build', '-c', 'opt', 'tensorflow/examples/android:tensorflow_native_libs', '--crosstool_top=//external:android/crosstool', '--cpu=' + cpu, '--host_crosstool_top=@bazel_tools//tools/cpp:toolchain'
-    }
-    exec {
-        workingDir tensorflowRepo
-        commandLine "mkdir", "-p", libDir + "/" + cpu
-    }
-    exec {
-        workingDir tensorflowRepo
-        commandLine 'cp', "-f", inferenceLibPath, libDir + "/" + cpu
+    if (!file(libDir + "/" + cpu + "/libtensorflow_inference.so").exists()) {
+        exec {
+            workingDir tensorflowRepo
+            commandLine bazelLocation, 'build', '-c', 'opt', 'tensorflow/examples/android:tensorflow_native_libs', '--crosstool_top=//external:android/crosstool', '--cpu=' + cpu, '--host_crosstool_top=@bazel_tools//tools/cpp:toolchain'
+        }
+        exec {
+            workingDir tensorflowRepo
+            commandLine "mkdir", "-p", libDir + "/" + cpu
+        }
+        exec {
+            workingDir tensorflowRepo
+            commandLine 'cp', "-f", inferenceLibPath, libDir + "/" + cpu
+        }
     }
 }
 
