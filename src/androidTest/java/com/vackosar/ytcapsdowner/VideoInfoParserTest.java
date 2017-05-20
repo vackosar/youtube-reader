@@ -11,7 +11,7 @@ public class VideoInfoParserTest {
 
     @Test
     public void getCaptionsUrl() throws Exception {
-        String url = VideoInfoParser.getCaptionsUrl(VIDEO_INFO);
+        String url = VideoInfoParser.extractCaptionsUrl(VIDEO_INFO);
         Assert.assertEquals(URL, url);
     }
 

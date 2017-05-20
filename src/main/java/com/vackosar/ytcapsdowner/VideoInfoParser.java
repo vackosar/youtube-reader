@@ -17,7 +17,7 @@ public class VideoInfoParser {
     private static final String LANG_TOKEN = "lang";
     private static final String EN_LANG_TOKEN_VALUE = "en";
 
-    public static String getCaptionsUrl(String videoInfo) {
+    public static String extractCaptionsUrl(String videoInfo) {
         return setTokenValue(LANG_TOKEN, EN_LANG_TOKEN_VALUE, getDefaultLangCaptionsUrl(videoInfo));
     }
 

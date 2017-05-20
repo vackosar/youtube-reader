@@ -21,7 +21,7 @@ public class CapsDownloader {
         try {
             String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
             String title = VideoInfoParser.extractTokenValue(TITLE_TOKEN, videoInfo);
-            String captionsUrl = VideoInfoParser.getCaptionsUrl(videoInfo);
+            String captionsUrl = VideoInfoParser.extractCaptionsUrl(videoInfo);
             String subtitles = convertStreamToString(new URL(captionsUrl).openConnection().getInputStream());
             String text = extractText(subtitles);
             return new Result(title, text);
