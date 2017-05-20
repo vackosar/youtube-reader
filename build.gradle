@@ -94,7 +94,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.vackosar.ytcapsdowner"
+        applicationId "com.vackosar.youtubereader"
         minSdkVersion 11
         targetSdkVersion 11
         versionCode 1
