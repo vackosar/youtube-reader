@@ -65,14 +65,12 @@ public class CapsDownloader {
     }
 
     private String extractText(String subs) {
-        return StringEscapeUtils.unescapeHtml(
-                subs
-                        .replaceAll("</text>", " ")
-                        .replaceAll("<[^>]*>", ""))
-                .replaceAll("<[^>]*>", "")
+        return StringEscapeUtils.unescapeHtml(subs.replaceAll("<[^>]*>", " "))
+                .replaceAll("<[^>]*>", " ")
                 .replaceAll("[‘’]", "'")
                 .replaceAll("&#39;", "'")
-                .replaceAll("\n", " ");
+                .replaceAll("\n", " ")
+                .replaceAll(" +", " ");
     }
 
     private String extractTokenValue(String name, String tokens) throws UnsupportedEncodingException {

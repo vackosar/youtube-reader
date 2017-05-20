@@ -30,12 +30,12 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
 
     private void punctuate(String url) {
         try {
-            setText("Downloading subtitles from: " + url + " ...");
+            setText("Downloading and extracting subtitles text from: " + url + " ...");
             String text = new CapsDownloader().download(url);
             if (punctuated(text)) {
                 setText(text);
             } else {
-                setText("Auto-punctuating downloaded captions ...");
+                setText("Generating punctuation for the text ...");
                 setText(new Punctuator(sampler, samplePunctuator).punctuate(text));
             }
         } catch (Exception e) {
