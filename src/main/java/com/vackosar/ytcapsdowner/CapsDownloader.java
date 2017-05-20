@@ -22,6 +22,9 @@ public class CapsDownloader {
     private static final String EQUALS = "=";
     private static final String SLASH_PREFIX = "^/";
     private static final String EMPTY = "";
+    private static final String DESKTOP_URL = "www.youtube.com";
+    private static final String MOBILE_URL = "m.youtube.com";
+    private static final String SHORT_URL = "youtu.be";
 
     public String download(String uri) {
         Exception exception = null;
@@ -49,14 +52,14 @@ public class CapsDownloader {
             urlString = "https://" + urlString;
         }
         URL url = new URL(urlString);
-        if ("www.youtube.com".equals(url.getHost()) || "m.youtube.com".equals(url.getHost())) {
+        if (DESKTOP_URL.equals(url.getHost()) || MOBILE_URL.equals(url.getHost())) {
             for (String tuple: url.getQuery().split("&")) {
                 if (tuple.startsWith("v=")) {
                     String value = tuple.replaceAll("v=", "");
                     return new URL(VIDEO_INFO_PREFIX + value);
                 }
             }
-        } else if ("youtu.be".equals(url.getHost())) {
+        } else if (SHORT_URL.equals(url.getHost())) {
             return new URL(VIDEO_INFO_PREFIX + url.getPath().replaceFirst(SLASH_PREFIX, EMPTY));
         } else {
             throw new IllegalArgumentException("Invalid Youtube address.");
