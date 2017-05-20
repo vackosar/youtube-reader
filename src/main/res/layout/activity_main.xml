@@ -41,7 +41,7 @@
         android:fillViewport="true">
 
         <TextView
-            android:id="@+id/captionText"
+            android:id="@+id/captionTextView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars = "vertical"

@@ -1,7 +1,5 @@
 package com.vackosar.ytcapsdowner;
 
-import android.os.AsyncTask;
-
 import org.apache.commons.lang.StringEscapeUtils;
 
 import java.io.IOException;
@@ -10,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Result> {
+public class CapsDownloader {
 
     private static final int MAX_RETRY = 2;
     private static final String VIDEO_INFO_PREFIX = "http://www.youtube.com/get_video_info?video_id=";
@@ -25,7 +23,7 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
     private static final String SLASH_PREFIX = "^/";
     private static final String EMPTY = "";
 
-    private String download(String uri) {
+    public String download(String uri) {
         Exception exception = null;
         for (int i = 0; i < MAX_RETRY; i++) {
             try {
@@ -93,33 +91,8 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
         return output;
     }
 
-    @Override
-    protected Result doInBackground(String... uris) {
-        try {
-            return new Result(download(uris[0]));
-        } catch (Exception e) {
-            return new Result(e);
-        }
-    }
-
     private static class TokenNotFound extends IllegalArgumentException {
         TokenNotFound(String msg) { super(msg); }
-    }
-
-
-    static class Result {
-
-        Result(String result) {
-            this.result = result;
-        }
-
-        Result(Exception exception) {
-            this.exception = exception;
-        }
-
-        String result;
-        Exception exception;
-
     }
 
 }

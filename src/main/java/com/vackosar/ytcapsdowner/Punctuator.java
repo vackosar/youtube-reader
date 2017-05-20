@@ -16,7 +16,7 @@ public class Punctuator {
         this.samplePunctuator = samplePunctuator;
     }
 
-    String punctuate(String text) {
+    public String punctuate(String text) {
         List<String[]> samples = sampler.sample(text);
         StringBuilder builder = new StringBuilder();
         boolean capitalize = true;
@@ -66,4 +66,5 @@ public class Punctuator {
             return Sampler.SPACE;
         }
     }
+
 }
