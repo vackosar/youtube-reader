@@ -45,7 +45,10 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
     }
 
     private String join(String title, String text) {
-        return title.toUpperCase() + "\n\n" + text;
+        return
+                title + "\n" +
+                "\n" +
+                text;
     }
 
     private boolean punctuated(String text) {

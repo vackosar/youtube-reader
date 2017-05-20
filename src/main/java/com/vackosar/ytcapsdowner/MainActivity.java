@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
@@ -56,13 +55,12 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     @Override
     public void onClick(View view) {
         String url = readClipboard();
-        final EditText editText = (EditText) getWindow().findViewById(R.id.url);
-        if (url == null) {
-            url = editText.getText().toString();
-        } else {
-            editText.setText(url);
-        }
+        getUrlView().setText(url);
         punctuate(url);
+    }
+
+    private TextView getUrlView() {
+        return (TextView) getWindow().findViewById(R.id.url);
     }
 
     private String readClipboard() {
@@ -75,11 +73,14 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     }
 
     private void punctuate(String url) {
-        final EditText editText = (EditText) getWindow().findViewById(R.id.url);
+        final TextView urlView = getUrlView();
         if (url == null) {
-            editText.setText("");
+            url = readClipboard();
+        }
+        if (url == null) {
+            urlView.setText(R.string.paste_button_text);
         } else {
-            editText.setText(url);
+            urlView.setText(url);
             Handler handler = new Handler();
             new CapsDisplayer(getCaptionText(), sampler, samplePunctuator, shareActionProvider, handler).execute(url);
         }

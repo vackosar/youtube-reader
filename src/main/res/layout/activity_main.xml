@@ -15,38 +15,41 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1">
-        <EditText
-            android:id="@+id/url"
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:id="@+id/url_scroll_view"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Paste URL"
-            android:textSize="9dp" />
+            android:scrollbars="horizontal"
+            android:fillViewport="true">
+            <TextView
+                android:id="@+id/url"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/url_view_info"
+                android:textSize="12sp"
+                android:maxLines="1" />
+        </HorizontalScrollView>
         <Button
             android:id="@+id/pasteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Paste"
-            android:textSize="9dp"
-            />
+            android:text="@string/paste_button_text"
+            android:textSize="12sp" />
     </LinearLayout>
-
-
     <ScrollView
         android:id="@+id/SCROLLER_ID"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars="vertical"
         android:fillViewport="true">
-
         <TextView
             android:id="@+id/captionTextView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars = "vertical"
-            android:text="Text"
-            android:textSize="20dp"
-            />
+            android:text="Displayes punctuated subtitles."
+            android:textSize="20dp" />
     </ScrollView>
 </LinearLayout>
