@@ -18,9 +18,9 @@ public class CapsDownloader extends AsyncTask<String, Void, CapsDownloader.Resul
     private static final String URL_TOKEN = "u";
     private static final String LANG_TOKEN = "lang";
     private static final String EN_LANG_TOKEN_VALUE = "en";
-    public static final String QUERY_SEPARATOR = "([&?])";
-    public static final String QUERY_VALUE_SEPARATOR = "=[^&]*";
-    public static final String FIRST_MATCH = "$1";
+    private static final String QUERY_SEPARATOR = "([&?])";
+    private static final String QUERY_VALUE_SEPARATOR = "=[^&]*";
+    private static final String FIRST_MATCH = "$1";
     private static final String EQUALS = "=";
     private static final String SLASH_PREFIX = "^/";
     private static final String EMPTY = "";
