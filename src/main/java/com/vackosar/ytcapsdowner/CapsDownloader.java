@@ -25,17 +25,20 @@ public class CapsDownloader {
     private static final String DESKTOP_URL = "www.youtube.com";
     private static final String MOBILE_URL = "m.youtube.com";
     private static final String SHORT_URL = "youtu.be";
+    private static final String TITLE_TOKEN = "title";
 
-    public String download(String uri) {
+    public Result download(String uri) {
         Exception exception = null;
         for (int i = 0; i < MAX_RETRY; i++) {
             try {
                 String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
+                String title = extractTokenValue(TITLE_TOKEN, videoInfo);
                 String captionTracks = extractTokenValue(CAPTIONS_TOKEN, videoInfo);
                 String url = extractTokenValue(URL_TOKEN, captionTracks);
                 String englishUrl = setTokenValue(LANG_TOKEN, EN_LANG_TOKEN_VALUE, url);
-                String subs = convertStreamToString(new URL(englishUrl).openConnection().getInputStream());
-                return extractText(subs);
+                String subtitles = convertStreamToString(new URL(englishUrl).openConnection().getInputStream());
+                String text = extractText(subtitles);
+                return new Result(title, text);
             } catch (TokenNotFound | IOException ignored) {
                 exception = ignored;
             }
@@ -94,6 +97,17 @@ public class CapsDownloader {
 
     private static class TokenNotFound extends IllegalArgumentException {
         TokenNotFound(String msg) { super(msg); }
+    }
+
+    public static class Result {
+
+        public final String title;
+        public final String text;
+
+        public Result(String title, String text) {
+            this.title = title;
+            this.text = text;
+        }
     }
 
 }

@@ -30,17 +30,22 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
 
     private void punctuate(String url) {
         try {
-            setText("Downloading and extracting subtitles text from: " + url + " ...");
-            String text = new CapsDownloader().download(url);
-            if (punctuated(text)) {
-                setText(text);
+            setText("Downloading and extracting subtitles from: " + url + " ...");
+            CapsDownloader.Result caps = new CapsDownloader().download(url);
+            if (punctuated(caps.text)) {
+                setText(join(caps.title, caps.text));
             } else {
-                setText("Generating punctuation for the text ...");
-                setText(new Punctuator(sampler, samplePunctuator).punctuate(text));
+                setText("Generating punctuation for the caps ...");
+                String text = new Punctuator(sampler, samplePunctuator).punctuate(caps.text);
+                setText(join(caps.title, text));
             }
         } catch (Exception e) {
             setText(ExceptionUtils.getRootCauseMessage(e).replaceAll("^.*?Exception: ", ""));
         }
+    }
+
+    private String join(String title, String text) {
+        return title.toUpperCase() + "\n\n" + text;
     }
 
     private boolean punctuated(String text) {
