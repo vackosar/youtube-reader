@@ -20,7 +20,7 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
     private final Sampler sampler;
     private final Handler handler;
 
-    public CapsDisplayer(TextView captionTextView, Sampler sampler, SamplePunctuator samplePunctuator, ShareActionProvider shareActionProvider, Handler handler) {
+    CapsDisplayer(TextView captionTextView, Sampler sampler, SamplePunctuator samplePunctuator, ShareActionProvider shareActionProvider, Handler handler) {
         this.shareActionProvider = shareActionProvider;
         this.captionTextView = captionTextView;
         this.sampler = sampler;
@@ -28,7 +28,7 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
         this.handler = handler;
     }
 
-    public void punctuate(String url) {
+    private void punctuate(String url) {
         try {
             setText("Downloading subtitles from: " + url + " ...");
             String text = new CapsDownloader().download(url);
@@ -54,11 +54,7 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
     }
 
     private void setText(final String text) {
-        captionTextView.post(new Runnable() {
-                          public void run() {
-                              captionTextView.setText(text);
-                          }
-                      });
+        handler.post(new Runnable() {@Override public void run() {captionTextView.setText(text);}});
         setShareIntent(text);
     }
 
@@ -67,14 +63,7 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
-        handler.post(new Runnable() {
-                         @Override
-                         public void run() {
-                             shareActionProvider.setShareIntent(sendIntent);
-                         }
-                     }
-        );
-
+        handler.post(new Runnable() {@Override public void run() {shareActionProvider.setShareIntent(sendIntent);}});
     }
 
     @Override
@@ -83,18 +72,4 @@ public class CapsDisplayer extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    static class Result {
-
-        Result(String result) {
-            this.result = result;
-        }
-
-        Result(Exception exception) {
-            this.exception = exception;
-        }
-
-        String result;
-        Exception exception;
-
-    }
 }
