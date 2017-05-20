@@ -1,5 +1,7 @@
 package com.vackosar.ytcapsdowner;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,14 +29,16 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     }
 
     private void init() {
-        final Button button = (Button) getWindow().findViewById(R.id.displayButton);
-        button.setOnClickListener(this);
-
+        registerListener();
         graphExecutor = new GraphExecutor(getAssets());
         WordIndex wordIndex = new WordIndex(getAssets());
         samplePunctuator = new SamplePunctuator(wordIndex, graphExecutor);
         sampler = new Sampler();
         punctuate(loadUrl());
+    }
+
+    private void registerListener() {
+        getWindow().findViewById(R.id.pasteButton).setOnClickListener(this);
     }
 
     private String loadUrl() {
@@ -51,9 +55,23 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
 
     @Override
     public void onClick(View view) {
+        String url = readClipboard();
         final EditText editText = (EditText) getWindow().findViewById(R.id.url);
-        String url = editText.getText().toString();
+        if (url == null) {
+            url = editText.getText().toString();
+        } else {
+            editText.setText(url);
+        }
         punctuate(url);
+    }
+
+    private String readClipboard() {
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private void punctuate(String url) {

@@ -23,11 +23,11 @@
             android:text="Paste URL"
             android:textSize="9dp" />
         <Button
-            android:id="@+id/displayButton"
+            android:id="@+id/pasteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Display"
+            android:text="Paste"
             android:textSize="9dp"
             />
     </LinearLayout>
