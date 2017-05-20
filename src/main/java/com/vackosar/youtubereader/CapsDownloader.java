@@ -1,4 +1,4 @@
-package com.vackosar.ytcapsdowner;
+package com.vackosar.youtubereader;
 
 import org.apache.commons.lang.StringEscapeUtils;
 

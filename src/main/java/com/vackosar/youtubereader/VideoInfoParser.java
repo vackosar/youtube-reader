@@ -1,4 +1,4 @@
-package com.vackosar.ytcapsdowner;
+package com.vackosar.youtubereader;
 
 import org.json.JSONException;
 import org.json.JSONObject;

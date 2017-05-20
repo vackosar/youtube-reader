@@ -1,4 +1,4 @@
-package com.vackosar.com.ytcapsdowner;
+package com.vackosar.youtubereader;
 
 import org.junit.Test;
 

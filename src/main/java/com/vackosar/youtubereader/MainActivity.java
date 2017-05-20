@@ -1,4 +1,4 @@
-package com.vackosar.ytcapsdowner;
+package com.vackosar.youtubereader;
 
 import android.content.ClipboardManager;
 import android.content.Context;

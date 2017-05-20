@@ -1,6 +1,4 @@
-package com.vackosar.com.ytcapsdowner;
-
-import com.vackosar.ytcapsdowner.Sampler;
+package com.vackosar.youtubereader;
 
 import junit.framework.Assert;
 
@@ -10,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.vackosar.ytcapsdowner.Sampler.FILLER;
+import static com.vackosar.youtubereader.Sampler.FILLER;
 
 public class SamplerTest {
 

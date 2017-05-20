@@ -1,6 +1,4 @@
-package com.vackosar.com.ytcapsdowner;
-
-import com.vackosar.ytcapsdowner.Cleaner;
+package com.vackosar.youtubereader;
 
 import junit.framework.Assert;
 

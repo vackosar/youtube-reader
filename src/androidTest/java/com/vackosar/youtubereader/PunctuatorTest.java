@@ -1,4 +1,4 @@
-package com.vackosar.ytcapsdowner;
+package com.vackosar.youtubereader;
 
 import android.content.res.AssetManager;
 import android.support.test.InstrumentationRegistry;
