@@ -22,7 +22,7 @@ def buildWithMake = false
 // assumes armeabi-v7a. If building with make, changing this will require
 // editing the Makefile as well.
 //def cpuType = 'armeabi-v7a'
-def cpuType = 'armeabi'
+//def cpuType = 'armeabi'
 //def cpuType = 'x86'
 
 // Output directory in the local directory for packaging into the APK.
@@ -75,7 +75,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-//    targetSdkVersion 9
     buildToolsVersion "25.0.3"
 
     lintOptions {
@@ -137,43 +136,36 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
 
-task buildNativeBazel(type: Exec) {
-    workingDir tensorflowRepo
-    commandLine bazelLocation, 'build', '-c', 'opt',  \
-         'tensorflow/examples/android:tensorflow_native_libs',  \
-         '--crosstool_top=//external:android/crosstool',  \
-         '--cpu=' + cpuType,  \
-         '--host_crosstool_top=@bazel_tools//tools/cpp:toolchain'
+task buildNativeBazel() {
+    doLast {
+        buildNativeBazelForCpu('x86', tensorflowRepo, bazelLocation, inferenceLibPath)
+        buildNativeBazelForCpu('armeabi', tensorflowRepo, bazelLocation, inferenceLibPath)
+        buildNativeBazelForCpu('armeabi-v7a', tensorflowRepo, bazelLocation, inferenceLibPath)
+    }
 }
 
-task buildNativeMake(type: Exec) {
-    environment "NDK_ROOT", makeNdkRoot
-    // Tip: install ccache and uncomment the following to speed up
-    // builds significantly.
-    // environment "CC_PREFIX", 'ccache'
-    workingDir tensorflowRepo
-    commandLine 'tensorflow/contrib/makefile/build_all_android.sh',  \
-         '-s',  \
-         'tensorflow/contrib/makefile/sub_makefiles/android/Makefile.in',  \
-         '-t',  \
-         'libtensorflow_inference.so'  \
-         //, '-T'  // Uncomment to skip protobuf and speed up subsequent builds.
-}
-
-task copyNativeLibs(type: Copy) {
-    from inferenceLibPath
-    into nativeOutDir
-    duplicatesStrategy = 'include'
-    dependsOn nativeBuildRule
-    fileMode 0644
+def buildNativeBazelForCpu(String cpu, tensorflowRepo, bazelLocation, inferenceLibPath) {
+    def libDir = System.getProperty("user.dir") + "/libs"
+    exec {
+        workingDir tensorflowRepo
+        commandLine bazelLocation, 'build', '-c', 'opt', 'tensorflow/examples/android:tensorflow_native_libs', '--crosstool_top=//external:android/crosstool', '--cpu=' + cpu, '--host_crosstool_top=@bazel_tools//tools/cpp:toolchain'
+    }
+    exec {
+        workingDir tensorflowRepo
+        commandLine "mkdir", "-p", libDir + "/" + cpu
+    }
+    exec {
+        workingDir tensorflowRepo
+        commandLine 'cp', "-f", inferenceLibPath, libDir + "/" + cpu
+    }
 }
 
 tasks.whenTaskAdded { task ->
     if (task.name == 'assembleDebug') {
-        task.dependsOn 'copyNativeLibs'
+        task.dependsOn nativeBuildRule
     }
     if (task.name == 'assembleRelease') {
-        task.dependsOn 'copyNativeLibs'
+        task.dependsOn nativeBuildRule
     }
 }
 
