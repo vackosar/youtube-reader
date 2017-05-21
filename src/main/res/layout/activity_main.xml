@@ -47,9 +47,9 @@
         <TextView
             android:id="@+id/captionTextView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:scrollbars = "vertical"
-            android:text="Displayes punctuated subtitles."
-            android:textSize="20dp" />
+            android:text="@string/caption_text_info"
+            android:textSize="20sp" />
     </ScrollView>
 </LinearLayout>
