@@ -94,11 +94,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.vackosar.youtubereader"
+        applicationId "com.vackosar.captionsreader"
         minSdkVersion 11
         targetSdkVersion 11
         versionCode 1
-        versionName "1.0"
+        versionName "1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
