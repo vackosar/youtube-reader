@@ -22,8 +22,8 @@ public class CapsDownloader {
             String videoInfo = convertStreamToString(createVideoInfoUrl(uri).openConnection().getInputStream());
             String title = VideoInfoParser.extractTokenValue(TITLE_TOKEN, videoInfo);
             String captionsUrl = VideoInfoParser.extractCaptionsUrl(videoInfo);
-            String subtitles = convertStreamToString(new URL(captionsUrl).openConnection().getInputStream());
-            String text = extractText(subtitles);
+            String captions = convertStreamToString(new URL(captionsUrl).openConnection().getInputStream());
+            String text = extractText(captions);
             return new Result(title, text);
         } catch (Exception e) {
             throw new IllegalArgumentException("English captions couldn't be downloaded for URL: '" + uri + "'", e);
