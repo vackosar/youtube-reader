@@ -1,4 +1,4 @@
-package com.vackosar.youtubereader;
+package com.vackosar.captionsreader;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;

@@ -1,4 +1,4 @@
-package com.vackosar.youtubereader;
+package com.vackosar.captionsreader;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
