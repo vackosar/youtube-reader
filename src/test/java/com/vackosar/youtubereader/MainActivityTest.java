@@ -1,4 +1,4 @@
-package com.vackosar.captionsreader;
+package com.vackosar.youtubereader;
 
 import org.junit.Test;
 

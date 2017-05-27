@@ -1,4 +1,4 @@
-package com.vackosar.captionsreader;
+package com.vackosar.youtubereader;
 
 import junit.framework.Assert;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.vackosar.captionsreader.Sampler.FILLER;
+import static com.vackosar.youtubereader.Sampler.FILLER;
 
 public class SamplerTest {
 

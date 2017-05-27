@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Captions Reader</string>
+    <string name="app_name">Youtube Reader</string>
     <string name="share">Share</string>
     <string name="url_view_info">Here Youtube URL will be displayed.</string>
     <string name="paste_button_text">Paste URL</string>

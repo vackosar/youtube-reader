@@ -1,4 +1,4 @@
-package com.vackosar.captionsreader;
+package com.vackosar.youtubereader;
 
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
