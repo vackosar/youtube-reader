@@ -12,5 +12,3 @@
 .externalNativeBuild
 /.idea
 /gradle
-/assets
-/libs
