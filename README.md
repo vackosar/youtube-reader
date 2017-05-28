@@ -7,6 +7,11 @@ Save mobile data watching Youtube: Download and read only captions!
 
 [store/youtube-reader-release.apk](store/youtube-reader-release.apk)
 
+## Donate
+
+* [![Donate](https://img.shields.io/badge/Donate-PayPal-pink.svg)](https://www.paypal.me/vackosar)
+* [Bitcoin: 1NapZs8brWNifGk7QFemqTByczdBAAg9cA](bitcoin://1NapZs8brWNifGk7QFemqTByczdBAAg9cA)
+
 ## Description:
 
 Would you like to ...
