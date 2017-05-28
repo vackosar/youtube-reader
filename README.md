@@ -32,3 +32,7 @@ Note that not all videos provide captions and app is in current version limited 
 
 <img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="270" height="480">
 
+## Technology
+
+Uses neural network to punctuate captions. Neural network is executed on Android using Tensorflow for Android libraries.
+Keras training project with a command line utility can be found here: https://github.com/vackosar/keras-punctuator
