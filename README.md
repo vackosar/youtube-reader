@@ -19,7 +19,7 @@ Note that not all videos provide captions and app is in current version limited 
 
 ## Screenshots
 
-<img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="360" height="640"><img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="360" height="640"><img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="360" height="640">
+<img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="270" height="480">
 
 ## Download
 
