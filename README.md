@@ -1,7 +1,11 @@
 # Youtube Reader For Android
-![Logo](store/featured.png)
+<img src="store/featured.png" width="512" height="250">
 
 Save mobile data watching Youtube: Download and read only captions!
+
+## Download
+
+[store/youtube-reader-release.apk](store/youtube-reader-release.apk)
 
 ## Description:
 
@@ -21,6 +25,3 @@ Note that not all videos provide captions and app is in current version limited 
 
 <img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="270" height="480">
 
-## Download
-
-[store/youtube-reader-release.apk](store/youtube-reader-release.apk)
