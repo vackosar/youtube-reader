@@ -6,7 +6,7 @@ Save mobile data watching Youtube: Download and read only captions!
 ## Download
 
 - Soon on F-Droid store!
-- Direct APK link: [store/youtube-reader-release.apk](store/youtube-reader-release.apk)
+- Direct APK link: [store/youtube-reader-release.apk](https://github.com/vackosar/youtube-reader/blob/master/store/youtube-reader-release.apk?raw=true)
 
 ## Donate
 
