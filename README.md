@@ -26,4 +26,4 @@ Note that not all videos provide captions and app is in current version limited 
 
 ## Download
 
-[APK Link](/data/androidStudioProjects/ytcapd/store/ytcapd-release.apk)
+[APK Link](/data/androidStudioProjects/ytcapd/store/youtube-reader-release.apk)
