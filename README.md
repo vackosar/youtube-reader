@@ -3,7 +3,6 @@
 
 Save mobile data watching Youtube: Download and read only captions!
 
-
 ## Description:
 
 Would you like to ...
@@ -20,10 +19,10 @@ Note that not all videos provide captions and app is in current version limited 
 
 ## Screenshots
 
-![1](store/screenshots/Screenshot_1495958585.png)
-![2](store/screenshots/Screenshot_1495958362.png)
-![3](store/screenshots/Screenshot_1495958371.png)
+<img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="360" height="640">
+<img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="360" height="640">
+<img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="360" height="640">
 
 ## Download
 
-[APK Link](/data/androidStudioProjects/ytcapd/store/youtube-reader-release.apk)
+[store/youtube-reader-release.apk](store/youtube-reader-release.apk)
