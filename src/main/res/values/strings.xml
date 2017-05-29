@@ -2,6 +2,6 @@
     <string name="app_name">Youtube Reader</string>
     <string name="share">Share</string>
     <string name="url_view_info">Here Youtube URL will be displayed.</string>
-    <string name="paste_button_text">Paste URL</string>
+    <string name="paste_button_text">Paste or Share URL into this app.</string>
     <string name="caption_text_info">Here punctuated captions will be displayed.</string>
 </resources>

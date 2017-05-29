@@ -1,3 +1,4 @@
+// path to checkout of https://github.com/tensorflow/tensorflow
 def tensorflowRepo = '/data/androidStudioProjects/tensorflow/'
 
 // Default to building with Bazel and override with make if requested.
