@@ -1,8 +1,18 @@
 # Youtube Reader For Android
-![Logo](store/featured.png)
+<img src="store/featured.png" width="512" height="250">
 
 Save mobile data watching Youtube: Download and read only captions!
 
+## Download
+
+- Not available on Google Play, because it uses Google's Youtube without showing ads.
+- Soon on F-Droid store!
+- Direct APK link: [store/youtube-reader-release.apk](https://github.com/vackosar/youtube-reader/blob/master/store/youtube-reader-release.apk?raw=true)
+
+## Donate
+
+* [![Donate](https://img.shields.io/badge/Donate-PayPal-pink.svg)](https://www.paypal.me/vackosar)
+* [Bitcoin: 1NapZs8brWNifGk7QFemqTByczdBAAg9cA](bitcoin://1NapZs8brWNifGk7QFemqTByczdBAAg9cA)
 
 ## Description:
 
@@ -20,10 +30,9 @@ Note that not all videos provide captions and app is in current version limited 
 
 ## Screenshots
 
-![1](store/screenshots/Screenshot_1495958585.png)
-![2](store/screenshots/Screenshot_1495958362.png)
-![3](store/screenshots/Screenshot_1495958371.png)
+<img src="store/screenshots/Screenshot_1495958585.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958362.png" alt="1" width="270" height="480"><img src="store/screenshots/Screenshot_1495958371.png" alt="1" width="270" height="480">
 
-## Download
+## Technology
 
-[APK Link](/data/androidStudioProjects/ytcapd/store/ytcapd-release.apk)
+Uses neural network to punctuate captions. Neural network is executed on Android using Tensorflow for Android libraries.
+Keras training project with a command line utility can be found here: https://github.com/vackosar/keras-punctuator
