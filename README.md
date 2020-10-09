@@ -36,3 +36,7 @@ Note that not all videos provide captions and app is in current version limited 
 
 Uses neural network to punctuate captions. Neural network is executed on Android using Tensorflow for Android libraries.
 Keras training project with a command line utility can be found here: https://github.com/vackosar/keras-punctuator
+
+# Subscribe to My Blog
+
+[VaclavKosar.com](https://vaclavkosar.com)
