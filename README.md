@@ -9,10 +9,9 @@ Save mobile data watching Youtube: Download and read only captions!
 - Soon on F-Droid store!
 - Direct APK link: [store/youtube-reader-release.apk](https://github.com/vackosar/youtube-reader/blob/master/store/youtube-reader-release.apk?raw=true)
 
-## Donate
+# Subscribe to My Blog
 
-* [![Donate](https://img.shields.io/badge/Donate-PayPal-pink.svg)](https://www.paypal.me/vackosar)
-* [Bitcoin: 1NapZs8brWNifGk7QFemqTByczdBAAg9cA](bitcoin://1NapZs8brWNifGk7QFemqTByczdBAAg9cA)
+[VaclavKosar.com](https://vaclavkosar.com)
 
 ## Description:
 
@@ -37,6 +36,4 @@ Note that not all videos provide captions and app is in current version limited 
 Uses neural network to punctuate captions. Neural network is executed on Android using Tensorflow for Android libraries.
 Keras training project with a command line utility can be found here: https://github.com/vackosar/keras-punctuator
 
-# Subscribe to My Blog
 
-[VaclavKosar.com](https://vaclavkosar.com)
